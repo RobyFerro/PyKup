@@ -1,16 +1,8 @@
 import os
+from lib import database
 
 
 class Logger:
 
     def __init__(self):
-        if os.path.exists('./log/history.log'):
-            print('File exist')
-        else:
-            print('File does not exists')
-            exit(255)
-
-    @staticmethod
-    def make_log_file():
-        open('./log/history.log')
-
+        self.db = database.Database()
