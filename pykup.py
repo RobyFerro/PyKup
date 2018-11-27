@@ -9,11 +9,11 @@ parser.add_argument('-l', action='store_true', dest='log', help="Show log", )
 args = parser.parse_args()
 
 if args.log:
-    log = logger.Logger()
+	log = logger.Logger()
 
 if args.directory is None:
-    print('You must insert a directory')
-    exit(255)
+	print('You must insert a directory')
+	exit(255)
 
 backup = backup.Backup(args.directory)
 backup.run()
