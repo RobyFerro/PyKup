@@ -1,5 +1,7 @@
 import tarfile
 import time
+import getpass
+import datetime
 from model import log
 
 
@@ -18,7 +20,13 @@ class Backup:
 			tar.add(self.directory, filename)
 			tar.close()
 			
-			insert = log.Log().create(type='INFO', description='Test')
+			insert = log.Log().create(
+				type='INFO',
+				description=f'Created .tar file of {self.directory} directory',
+				user=getpass.getuser(),
+				created_at=datetime.datetime.now()
+			)
+			
 			insert.save()
 		
 		except Exception as msg:
