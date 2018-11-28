@@ -1,6 +1,6 @@
 # PyKup - WebApp backup manager
 
-A simple backup tool to easly backup your WebApp
+A simple tool to easly backup your WebApp
 
 ### Todo list:
 - [ ] PostgreSQL dump
