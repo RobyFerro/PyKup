@@ -12,4 +12,5 @@ if args.directory is None:
 	exit(255)
 
 backup = backup.Backup(args.directory)
-backup.run()
+#backup.run()
+backup.dump()

@@ -1,0 +1,8 @@
+{
+	"db_connection": "driver",
+	"db_host": "localhost",
+	"db_port": "port",
+	"db_username": "username",
+	"db_password": "password",
+	"db_name": "name"
+}
