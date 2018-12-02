@@ -1,6 +1,6 @@
 # PyKup - WebApp backup manager
 
-A simple tool to easly backup your WebApp
+A simple tool to easily backup your WebApp
 
 ### Todo list:
 - [x] File backup and compression
