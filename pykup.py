@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, argparse
+import argparse
 from lib import backup
 from sys import platform
 
@@ -17,5 +17,6 @@ if args.directory is None:
 	exit(255)
 
 backup = backup.Backup(args.directory)
-#backup.run()
-backup.dump()
+
+dump = backup.database()
+backup.file()

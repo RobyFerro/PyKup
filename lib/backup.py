@@ -10,17 +10,25 @@ import os
 
 class Backup:
 
+	dump = False
+
 	def __init__(self, dir):
 		self.directory = dir
+		self.dump = None
 
-	def run(self):
+	def file(self):
+
 		date = time.time()
 
 		filename = f'backup-{date}.tar.gz'
 
 		try:
 			tar = tarfile.open(filename, 'w:gz')
-			tar.add(self.directory, filename)
+			tar.add(self.directory)
+
+			if self.dump is not None:
+				tar.add(self.dump)
+
 			tar.close()
 
 			insert = log.Log().create(
@@ -37,13 +45,15 @@ class Backup:
 			return False
 		return True
 
-	@staticmethod
-	def dump():
+	def database(self):
+		date = time.time()
 
 		with open('config/database.json') as f:
 			db_config = json.load(f)
 
 		if db_config['db_connection'] == 'pgsql':
+
+			filename = f'{db_config["db_name"]}-{date}.dump'
 
 			os.putenv('PGPASSWORD', db_config['db_password'])
 
@@ -52,8 +62,10 @@ class Backup:
 				f'--host={db_config["db_host"]}',
 				f'--user={db_config["db_username"]}',
 				f'--dbname={db_config["db_name"]}',
-				f'--file=./test.dump'
+				f'--file=./tmp/{filename}'
 			], stdout=subprocess.PIPE)
+
+			self.dump = f'tmp/{filename}'
 
 			return c.communicate()[0]
 
