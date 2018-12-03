@@ -6,8 +6,7 @@ A simple tool to easily backup your WebApp
 - [x] File backup and compression
 - [x] Log activity
 - [x] PostgreSQL dump
-- [ ] MySQL dump (I'm working on it...)
-- [ ] SQLite dump (I'm working on it...)
+- [x] MySQL dump
 - [ ] OneDrive integration (I'm working on it...)
 - [ ] Google Drive Integration
 - [ ] Mega integration
