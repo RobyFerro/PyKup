@@ -102,7 +102,7 @@ class Backup:
 			print('Please select a correct upload driver')
 			exit(255)
 		
-		if type is 'dropbox':
+		if type == 'dropbox':
 			if self.file is not None:
 				dbx = dropbox.DropboxIntegration(f'{self.app_name}')
 				dbx.upload(self.file)
