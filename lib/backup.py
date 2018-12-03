@@ -13,15 +13,16 @@ class Backup:
 	dump = False
 	file = False
 	
-	def __init__(self, dir, appname):
+	def __init__(self, dir, app_name, database):
 		self.directory = dir
 		self.dump = None
-		self.app_name = appname
+		self.app_name = app_name
+		self.database_config = database
 	
 	def database(self):
 		date = time.time()
 		
-		with open('config/database.json') as f:
+		with open(self.database_config) as f:
 			db_config = json.load(f)
 		
 		filename = f'{db_config["db_name"]}-{date}.dump'
@@ -65,7 +66,7 @@ class Backup:
 		
 		date = time.time()
 		
-		filename = f'backup-{self.app_name}-{date}.tar.gz'
+		filename = f'tmp/backup-{self.app_name}-{date}.tar.gz'
 		
 		try:
 			tar = tarfile.open(filename, 'w:gz')
