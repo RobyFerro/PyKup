@@ -5,44 +5,18 @@ import datetime
 import json
 import subprocess
 from model import log
+from lib.integrations import dropbox
 import os
 
 
 class Backup:
 	dump = False
+	file = False
 	
-	def __init__(self, dir):
+	def __init__(self, dir, appname):
 		self.directory = dir
 		self.dump = None
-	
-	def file(self):
-		
-		date = time.time()
-		
-		filename = f'backup-{date}.tar.gz'
-		
-		try:
-			tar = tarfile.open(filename, 'w:gz')
-			tar.add(self.directory)
-			
-			if self.dump is not None:
-				tar.add(self.dump)
-			
-			tar.close()
-			
-			insert = log.Log().create(
-				type='INFO',
-				description=f'Created .tar file of {self.directory} directory',
-				user=getpass.getuser(),
-				created_at=datetime.datetime.now()
-			)
-			
-			insert.save()
-		
-		except Exception as msg:
-			print(msg)
-			return False
-		return filename
+		self.app_name = appname
 	
 	def database(self):
 		date = time.time()
@@ -86,3 +60,44 @@ class Backup:
 			return c.communicate()[0]
 		
 		return True
+	
+	def file(self):
+		
+		date = time.time()
+		
+		filename = f'backup-{self.app_name}-{date}.tar.gz'
+		
+		try:
+			tar = tarfile.open(filename, 'w:gz')
+			tar.add(self.directory)
+			
+			if self.dump is not None:
+				tar.add(self.dump)
+			
+			tar.close()
+			
+			insert = log.Log().create(
+				type='INFO',
+				description=f'Created .tar file of {self.directory} directory',
+				user=getpass.getuser(),
+				created_at=datetime.datetime.now()
+			)
+			
+			insert.save()
+		
+		except Exception as msg:
+			print(msg)
+			return False
+		
+		self.file = filename
+		return True
+	
+	def upload(self):
+		
+		if self.file is not None:
+			dbx = dropbox.DropboxIntegration(f'{self.app_name}')
+			dbx.upload(self.file)
+	
+	def __del__(self):
+		os.remove(self.file)
+		os.remove(self.dump)
