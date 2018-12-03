@@ -39,7 +39,7 @@ class Backup:
 				f'--file=./tmp/{filename}'
 			], stdout=subprocess.PIPE)
 			
-			self.dump = f'tmp/{filename}'
+			self.dump = f'exports/{filename}'
 			
 			return c.communicate()[0]
 		
@@ -47,7 +47,7 @@ class Backup:
 			
 			os.putenv('PGPASSWORD', db_config['db_password'])
 			
-			with open(f'./tmp/{filename}', 'w') as out:
+			with open(f'./exports/{filename}', 'w') as out:
 				c = subprocess.Popen([
 					f'mysqldump',
 					f'--host={db_config["db_host"]}',
@@ -56,7 +56,7 @@ class Backup:
 					f'{db_config["db_name"]}'
 				], stdout=out)
 			
-			self.dump = f'tmp/{filename}'
+			self.dump = f'exports/{filename}'
 			
 			return c.communicate()[0]
 		
@@ -66,7 +66,7 @@ class Backup:
 		
 		date = time.time()
 		
-		filename = f'tmp/backup-{self.app_name}-{date}.tar.gz'
+		filename = f'exports/backup-{self.app_name}-{date}.tar.gz'
 		
 		try:
 			tar = tarfile.open(filename, 'w:gz')
