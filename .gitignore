@@ -1,9 +1,0 @@
-.idea/
-lib/__pycache__/
-model/__pycache__/
-venv/Lib/site-packages/__pycache__/
-venv/Lib/site-packages/playhouse/__pycache__/
-/.gitignore
-/config/database.json
-/config/integrations/onedrive.json
-/config/integrations/dropbox.json
