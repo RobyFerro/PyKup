@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 from lib import backup
+from lib.integrations import dropbox
 from sys import platform
 
 if platform not in ['linux','linux2']:
@@ -19,4 +20,6 @@ if args.directory is None:
 backup = backup.Backup(args.directory)
 
 dump = backup.database()
-backup.file()
+file = backup.file()
+dbx = dropbox.DropboxIntegration()
+dbx.upload(file)

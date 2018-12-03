@@ -42,7 +42,7 @@ class Backup:
 		except Exception as msg:
 			print(msg)
 			return False
-		return True
+		return filename
 	
 	def database(self):
 		date = time.time()
