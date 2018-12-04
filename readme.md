@@ -9,6 +9,6 @@ A simple tool to easily backup your WebApp
 - [x] MySQL dump
 - [x] Dropbox integration
 - [x] SCP Sync
-- [ ] Demonize everything (I'm working on it...)
+- [x] Crontab integration
 - [ ] Google Drive Integration
 - [ ] Mega integration
