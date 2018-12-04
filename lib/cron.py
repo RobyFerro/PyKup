@@ -6,7 +6,7 @@ class CronIntegration:
 	
 	def __init__(self, args):
 		self.cron = CronTab(user=True)
-		self.command = f'{sys.executable} {os.getcwd()} pykup.py'
+		self.command = f'{sys.executable} {os.getcwd()} pykup.py '
 		
 		for opt in vars(args):
 			if opt == 'directory' and args.directory is not None:
