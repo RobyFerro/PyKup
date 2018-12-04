@@ -5,11 +5,8 @@ import datetime
 import json
 import subprocess
 from model import log
-from lib.integrations import dropbox
+from lib.integrations import dropbox, scp
 import os
-import paramiko
-from paramiko import SSHClient
-from scp import SCPClient
 
 
 class Backup:
@@ -39,7 +36,7 @@ class Backup:
 				f'--host={db_config["db_host"]}',
 				f'--user={db_config["db_username"]}',
 				f'--dbname={db_config["db_name"]}',
-				f'--file=./tmp/{filename}'
+				f'--file=./exports/{filename}'
 			], stdout=subprocess.PIPE)
 			
 			self.dump = f'exports/{filename}'
@@ -108,18 +105,8 @@ class Backup:
 				dbx.upload(self.file)
 		elif type == 'scp':
 			
-			with open (scp_config) as f:
-				config = json.load(f)
-			
-			ssh = SSHClient()
-			ssh.load_system_host_keys()
-			ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-			ssh.connect(config['hostname'], config["port"], config["username"], config["password"])
-			
-			scp = SCPClient(ssh.get_transport())
-			scp.put(f'{self.file}', recursive=True, remote_path=remote_folder)
-			
-			scp.close()
+			upload = scp.SCPUpload(scp_config)
+			upload.upload(f'{self.file}', remote_folder)
 	
 	def __del__(self):
 		os.remove(self.file)
