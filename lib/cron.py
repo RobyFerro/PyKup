@@ -1,4 +1,4 @@
-from lib.crontab.crontab import CronTab
+from crontab import CronTab
 import os
 import sys
 
