@@ -7,7 +7,7 @@ class CronIntegration:
 	
 	def __init__(self, args):
 		self.cron = CronTab(user=True)
-		self.command = f'cd {os.getcwd()} && {sys.executable}{os.getcwd()} pykup.py '
+		self.command = f'cd {os.getcwd()} && {sys.executable} {os.getcwd()}/pykup.py '
 		self.app_name = args.app_name
 		
 		with open('config/crontab/crontab.json') as f:
