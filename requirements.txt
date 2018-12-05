@@ -1,0 +1,5 @@
+dropbox==9.2.0
+paramiko==2.4.2
+peewee==3.7.1
+python-crontab==2.3.5
+scp==0.13.0
