@@ -1,12 +1,17 @@
 from crontab import CronTab
 import os
 import sys
+import json
 
 class CronIntegration:
 	
 	def __init__(self, args):
 		self.cron = CronTab(user=True)
 		self.command = f'cd {os.getcwd()} && {sys.executable}/{os.getcwd()} pykup.py '
+		self.app_name = args.app_name
+		
+		with open('config/crontab/crontab.json') as f:
+			self.config = json.load(f)
 		
 		for opt in vars(args):
 			if opt == 'directory' and args.directory is not None:
@@ -24,7 +29,8 @@ class CronIntegration:
 				
 	def insert_new_job(self):
 		
-		job = self.cron.new(command=self.command)
-		job.hour.on(23)
+		job = self.cron.new(command=self.command, comment=f'{self.app_name}')
+		job.hour.on(self.config["hours"])
+		job.minutes.on(self.config["minutes"])
 		job.enable()
 		self.cron.write()
