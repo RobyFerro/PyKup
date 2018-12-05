@@ -12,11 +12,8 @@ pip install -r requirements.txt
 
 After that you can get all information by typing:
 ```
-python pykup.py --help
-
-usage: pykup.py [-h] [-d DIRECTORY] [-n APP_NAME] [-dB DATABASE]
-                [-uD UPLOAD_DRIVER] [-sC SCP_CONFIG] [-rF REMOTE_FOLDER]
-                [--cron]
+usage: pykup.py [-h] -d DIRECTORY [-n APP_NAME] -cF CONFIG_FILE
+                [-uD UPLOAD_DRIVER] [-rF REMOTE_FOLDER] [--cron]
 
 PyBack WebApp backup utils
 
@@ -24,15 +21,14 @@ optional arguments:
   -h, --help         show this help message and exit
   -d DIRECTORY       Set a backup directory
   -n APP_NAME        Define application name
-  -dB DATABASE       Define database configuration file
+  -cF CONFIG_FILE    Define configuration file
   -uD UPLOAD_DRIVER  Define upload driver dropbox|scp
-  -sC SCP_CONFIG     Define scp connection configuration
   -rF REMOTE_FOLDER  Define scp remote folder
   --cron             Set command in crontab
 ```
 
 ## Config
-To config your web app you should rename all .json.example in config directory
+To config your web app you should rename all config.ini.example in config directory
 and replace all values with your parameters.
 
 

@@ -1,7 +1,0 @@
-{
-	"hostname": "HOSTNAME",
-	"username": "USERNAME",
-	"password": "PASSWORD",
-	"port" : "PORT",
-	"max_bakup_age" : "days"
-}

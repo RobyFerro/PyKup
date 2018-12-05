@@ -1,16 +1,16 @@
 import dropbox
-import json
 import datetime
+from modules import env
 
 
 class DropboxIntegration:
 	dbx = None
 	
-	def __init__(self, destination):
+	def __init__(self, destination, config_file):
 		self.destination = destination
-		with open('config/integrations/dropbox.json') as f:
-			self.config = json.load(f)
-			self.dbx = dropbox.Dropbox(self.config["access_token"])
+		self.config = env.get_config(config_file)['DROPBOX_INTEGRATION']
+		self.dbx = dropbox.Dropbox(self.config['ACCESS_TOKEN'])
+		
 	
 	def upload(self, file):
 		
@@ -27,9 +27,10 @@ class DropboxIntegration:
 		
 		for file in file_list.entries:
 			
-			if abs(now - file.server_modified).days > self.config["max_backup_age"]:
+			if abs(now - file.server_modified).days > int(self.config["DBX_MAX_BACKUP_AGE"]):
 				self.dbx.files_delete_v2(path=file.path_lower)
-		
-	def __del__(self):
+				
+	def close_connection(self):
 		if self.dbx is not None:
 			self.dbx._session.close()
+		

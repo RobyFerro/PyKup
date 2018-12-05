@@ -2,10 +2,10 @@ import tarfile
 import time
 import getpass
 import datetime
-import json
 import subprocess
 from model import log
-from lib.integrations import dropbox, scp
+from modules.integrations import dropbox, scp
+from modules import env
 import os
 
 
@@ -13,29 +13,28 @@ class Backup:
 	dump = False
 	file = False
 	
-	def __init__(self, dir, app_name, database):
+	def __init__(self, dir, app_name, config):
 		self.directory = dir
 		self.dump = None
 		self.app_name = app_name
-		self.database_config = database
+		self.config_file = config
 	
 	def database(self):
 		date = time.time()
 		
-		with open(self.database_config) as f:
-			db_config = json.load(f)
+		db_config = env.get_config(self.config_file)["DATABASE_CONFIGURATION"]
 		
-		filename = f'{db_config["db_name"]}-{date}.dump'
+		filename = f'{db_config["DB_NAME"]}-{date}.dump'
 		
-		if db_config['db_connection'] == 'pgsql':
+		if db_config['DB_CONNECTION'] == 'pgsql':
 			
-			os.putenv('PGPASSWORD', db_config['db_password'])
+			os.putenv('PGPASSWORD', db_config['DB_PASSWORD'])
 			
 			c = subprocess.Popen([
 				f'pg_dump',
-				f'--host={db_config["db_host"]}',
-				f'--user={db_config["db_username"]}',
-				f'--dbname={db_config["db_name"]}',
+				f'--host={db_config["DB_HOST"]}',
+				f'--user={db_config["DB_USERNAME"]}',
+				f'--dbname={db_config["DB_NAME"]}',
 				f'--file=./exports/{filename}'
 			], stdout=subprocess.PIPE)
 			
@@ -43,17 +42,17 @@ class Backup:
 			
 			return c.communicate()[0]
 		
-		elif db_config['db_connection'] == 'mysql':
+		elif db_config['DB_CONNECTION'] == 'mysql':
 			
-			os.putenv('PGPASSWORD', db_config['db_password'])
+			os.putenv('PGPASSWORD', db_config['DB_PASSWORD'])
 			
 			with open(f'./exports/{filename}', 'w') as out:
 				c = subprocess.Popen([
 					f'mysqldump',
-					f'--host={db_config["db_host"]}',
-					f'--user={db_config["db_username"]}',
-					f'--password={db_config["db_password"]}',
-					f'{db_config["db_name"]}'
+					f'--host={db_config["DB_HOST"]}',
+					f'--user={db_config["DB_USERNAME"]}',
+					f'--password={db_config["DB_PASSWORD"]}',
+					f'{db_config["DB_NAME"]}'
 				], stdout=out)
 			
 			self.dump = f'exports/{filename}'
@@ -62,7 +61,7 @@ class Backup:
 		
 		return True
 	
-	def file(self):
+	def content(self):
 		
 		date = time.time()
 		
@@ -93,7 +92,7 @@ class Backup:
 		self.file = filename
 		return True
 	
-	def upload(self, type, scp_config, remote_folder):
+	def upload(self, type, remote_folder):
 		
 		if type not in ['dropbox', 'scp']:
 			print('Please select a correct upload driver')
@@ -101,13 +100,15 @@ class Backup:
 		
 		if type == 'dropbox':
 			if self.file is not None:
-				dbx = dropbox.DropboxIntegration(f'{self.app_name}')
+				dbx = dropbox.DropboxIntegration(f'{self.app_name}', self.config_file)
 				dbx.upload(self.file)
+				dbx.close_connection()
 		elif type == 'scp':
 			
-			upload = scp.SCPUpload(scp_config)
+			upload = scp.SCPUpload(self.config_file)
 			upload.upload(f'{self.file}', remote_folder)
+			upload.close_scp_connection()
 	
-	def __del__(self):
+	def delete_local_backup(self):
 		os.remove(self.file)
 		os.remove(self.dump)
