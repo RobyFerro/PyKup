@@ -1,9 +1,30 @@
 # PyKup - WebApp backup manager
 
-A simple tool to easily backup your WebApp
+A simple tool to easily backup your WebApp.
+With PyKup you can backup your web applications in just one command.
+Everything will be compressed and stored in your favorite storage location.
+
+## Usage
+
+```
+python pykup.py -d <APP_FOLDER> -cF <PATH_CONFIG_FILE> -uD <UPLOAD_DRIVER dropbox|scp> --cron 
+```
+
+## Multiple application backup
+With crontab integration you can schedule multiple application backup:
+
+```
+python pykup.py -d <APP_FOLDER_1> -cF <PATH_CONFIG_FILE_1> -uD <UPLOAD_DRIVER dropbox|scp> --cron 
+python pykup.py -d <APP_FOLDER_2> -cF <PATH_CONFIG_FILE_2> -uD <UPLOAD_DRIVER dropbox|scp> --cron 
+```
 
 ## Getting started
-First of all ensure that Python 3 is installed on your machine. 
+First of all ensure that Python 3 is installed on your machine, then you can get all file with:
+
+```
+git clone https://github.com/RobyFerro/PyKup.git
+```
+
 Install all requirements with:
 
 ```
@@ -28,14 +49,22 @@ optional arguments:
 ```
 
 ## Config
-To config your web app you should rename all config.ini.example in config directory
+To config your web app you should rename config.ini.example in config directory
 and replace all values with your parameters.
 
+You can set multiple .ini file to schedule multiple backup
+
+```
+first-app.ini
+second-app.ini
+third-app.ini
+```
+
+**This trick it will be useful combinated with --cron option.**
 
 ## Crontab events
-With "--cron" option you can schedule your backup in crontab jobs.
-You can show all cron jobs by typing:
-
+To set the current command inside linux crontab job you've just to specify --cron option.
+Use the following command to show all existing crontab job:
 ```
 crontab -l
 ```
