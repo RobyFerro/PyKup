@@ -1,7 +1,7 @@
 import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
-from modules import env
+from core import env
 
 
 class SCPUpload:

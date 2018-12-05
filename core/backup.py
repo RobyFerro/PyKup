@@ -4,8 +4,8 @@ import getpass
 import datetime
 import subprocess
 from model import log
-from modules.integrations import dropbox, scp
-from modules import env
+from core.integrations import dropbox, scp
+from core import env
 import os
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import argparse
-from modules import backup, cron
+from core import backup, cron
 from sys import platform
 
 if platform not in ['linux', 'linux2']:
