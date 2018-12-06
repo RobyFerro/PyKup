@@ -1,7 +1,7 @@
 import os
 import sys
 from crontab import CronTab
-from core import env
+from modules import env
 
 
 class CronIntegration:

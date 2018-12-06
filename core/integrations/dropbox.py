@@ -1,6 +1,6 @@
 import dropbox
 import datetime
-from core import env
+from modules import env
 
 
 class DropboxIntegration:

@@ -5,7 +5,7 @@ import datetime
 import subprocess
 from model import log
 from core.integrations import dropbox, scp
-from core import env
+from modules import env
 import os
 
 
