@@ -86,7 +86,7 @@ Once created you've to generate a new access token and put it on config/integrat
 
 To send notification to your own telegram channel you've to create a [Telegram bot](https://core.telegram.org/bots#6-botfather)
 
-* Insert your TOKEN and channel name in config.ini file
+* Insert your TOKEN and Telegram user ID in config.ini file
 
 ### Todo list:
 - [x] File backup and compression

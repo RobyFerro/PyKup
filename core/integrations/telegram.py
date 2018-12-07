@@ -10,7 +10,7 @@ class TelegramBot:
 		self.updater = telegram.ext.Updater(self.config["ACCESS_TOKEN"])
 	
 	def send_confirm_message(self, message):
-		self.bot.send_message(chat_id=self.config['GROUP_NAME'], text=message)
+		self.bot.send_message(chat_id=self.config['USER_ID'], text=message)
 	
 	def start_polling(self):
 		self.updater.start_polling()
