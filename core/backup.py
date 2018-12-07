@@ -4,7 +4,7 @@ import getpass
 import datetime
 import subprocess
 from model import log
-from core.integrations import dropbox, scp
+from core.integrations import dropbox, scp, telegram
 from modules import env
 import os
 
@@ -13,11 +13,12 @@ class Backup:
 	dump = False
 	file = False
 	
-	def __init__(self, dir, app_name, config):
+	def __init__(self, dir, app_name, config, telegram):
 		self.directory = dir
 		self.dump = None
 		self.app_name = app_name
 		self.config_file = config
+		self.telegram = telegram
 	
 	def database(self):
 		date = time.time()
@@ -94,6 +95,8 @@ class Backup:
 	
 	def upload(self, type, remote_folder):
 		
+		tg = telegram.TelegramBot(self.config_file)
+		
 		if type not in ['dropbox', 'scp']:
 			print('Please select a correct upload driver')
 			exit(255)
@@ -103,11 +106,19 @@ class Backup:
 				dbx = dropbox.DropboxIntegration(f'{self.app_name}', self.config_file)
 				dbx.upload(self.file)
 				dbx.close_connection()
+				
+				if self.telegram is True:
+					tg.send_confirm_message(
+						f'Congratulations! Your {self.app_name} is correctly backuped in your dropbox account')
+					
 		elif type == 'scp':
+			if self.file is not None:
+				upload = scp.SCPUpload(self.config_file)
+				upload.upload(f'{self.file}', remote_folder)
+				upload.close_scp_connection()
 			
-			upload = scp.SCPUpload(self.config_file)
-			upload.upload(f'{self.file}', remote_folder)
-			upload.close_scp_connection()
+				if self.telegram is True:
+					tg.send_confirm_message(f'Congratulations! Your {self.app_name} is correctly backuped in your server')
 	
 	def delete_local_backup(self):
 		os.remove(self.file)

@@ -1,4 +1,4 @@
-# PyKup - WebApp backup manager
+# PyKup - WebApp backup manage ![Pykup](logo.jpg)
 
 A simple tool to easily backup your WebApp.
 With PyKup you can backup your web applications in just one command.
@@ -46,6 +46,7 @@ optional arguments:
   -uD UPLOAD_DRIVER  Define upload driver dropbox|scp
   -rF REMOTE_FOLDER  Define scp remote folder
   --cron             Set command in crontab
+  --telegram         Send telegram notification after backup
 ```
 
 ## Config
@@ -80,6 +81,12 @@ and follow this steps:
 
 Once created you've to generate a new access token and put it on config/integrations/dropbox.json
 
+## Telegram confirm notification
+
+To send notification to your own telegram channel you've to create a [Telegram bot](https://core.telegram.org/bots#6-botfather)
+
+* Insert your TOKEN and channel name in config.ini file
+
 ### Todo list:
 - [x] File backup and compression
 - [x] Log activity
@@ -87,6 +94,8 @@ Once created you've to generate a new access token and put it on config/integrat
 - [x] MySQL dump
 - [x] Dropbox integration
 - [x] SCP Sync
+- [x] Rsync integration
 - [x] Crontab integration
+- [x] Telegram confirm notification
+- [ ] Telegram bot remote control
 - [ ] Google Drive Integration
-- [ ] Mega integration
