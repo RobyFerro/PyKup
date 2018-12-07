@@ -24,7 +24,9 @@ class CronIntegration:
 				self.command += f'-cF {args.config_file} '
 			elif opt == 'remote_folder' and args.remote_folder is not None:
 				self.command += f'-rF {args.remote_folder} '
-				
+			elif opt == 'telegram' and args.telegram is not False:
+				self.command += f'--telegram'
+	
 	def insert_new_job(self):
 		
 		job = self.cron.new(command=self.command, comment=f'{self.app_name}')
