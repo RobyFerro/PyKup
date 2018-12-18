@@ -1,5 +1,5 @@
 ![Pykup](logo.jpg) 
-# PyKup - WebApp backup manage
+# PyKup - WebApp backup manager
 
 A simple tool to easily manage and schedule backup for any web app!
 With PyKup you can backup your web applications in just one command.
