@@ -100,3 +100,8 @@ To send notification to your own telegram channel you've to create a [Telegram b
 - [x] Telegram confirm notification
 - [ ] Telegram bot remote control
 - [ ] Google Drive Integration
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/RobyFerro/PyKup/badge.svg?style=beer-square)](https://beerpay.io/RobyFerro/PyKup)  [![Beerpay](https://beerpay.io/RobyFerro/PyKup/make-wish.svg?style=flat-square)](https://beerpay.io/RobyFerro/PyKup?focus=wish)
