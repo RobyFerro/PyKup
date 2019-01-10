@@ -1,3 +1,5 @@
+import datetime
+
 import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
@@ -23,6 +25,7 @@ class SCPUpload:
 	def upload(self, file, remote_folder):
 		scp = SCPClient(self.ssh.get_transport())
 		scp.put(f'{file}', recursive=True, remote_path=remote_folder)
+		self.check_backup_age(remote_folder)
 		scp.close()
 	
 	def close_scp_connection(self):
@@ -31,5 +34,11 @@ class SCPUpload:
 	def check_backup_age(self, remote_folder):
 		sftp = self.ssh.open_sftp()
 		sftp.chdir(path=remote_folder)
-
-# TODO: Complete backup age
+		
+		for file in sftp.listdir():
+			age = datetime.datetime.fromtimestamp(sftp.stat(file).st_mtime) - datetime.datetime.now()
+			
+			if age.days >= int(self.config["SCP_MAX_BACKUP_AGE"]):
+				sftp.unlink(file)
+		
+		sftp.close()
