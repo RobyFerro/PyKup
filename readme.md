@@ -102,7 +102,7 @@ To send notification to your own telegram channel you've to create a [Telegram b
 - [ ] Google Drive Integration
 
 ## Need help? 
-Join in uour [Telegram community](https://t.me/ikdev)
+Join in our [Telegram community](https://t.me/ikdev)
 
 ## Support on Beerpay
 Hey dude! Help me out for a couple of :beers:!
