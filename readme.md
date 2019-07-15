@@ -101,6 +101,9 @@ To send notification to your own telegram channel you've to create a [Telegram b
 - [ ] Telegram bot remote control
 - [ ] Google Drive Integration
 
+## Need help? 
+Join in uour [Telegram community](https://t.me/ikdev)
+
 ## Support on Beerpay
 Hey dude! Help me out for a couple of :beers:!
 
