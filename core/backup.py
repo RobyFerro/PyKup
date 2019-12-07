@@ -36,7 +36,7 @@ class Backup:
 				f'pg_dump',
 				f'--host={db_config["DB_HOST"]}',
 				f'--user={db_config["DB_USERNAME"]}',
-				f'--dbname={db_config["DB_NAME"]}',
+				f'{db_config["DB_NAME"]}',
 				f'--file=./exports/{filename}'
 			], stdout=subprocess.PIPE)
 
