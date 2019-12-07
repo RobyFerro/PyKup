@@ -9,13 +9,68 @@ if platform not in ['linux', 'linux2']:
 
 parser = argparse.ArgumentParser(description='PyBack WebApp backup utils')
 
-parser.add_argument('-d',action='store',dest='directory',help="Set a backup directory",type=str,default=None, required=True)
-parser.add_argument('-n',action='store',dest='app_name',help="Define application name",type=str,default=None)
-parser.add_argument('-cF',action='store',dest='config_file',help="Define configuration file",type=str,default=None, required=True)
-parser.add_argument('-uD',action='store',dest='upload_driver',help="Define upload driver dropbox|scp",type=str,default=None)
-parser.add_argument('-rF',action='store',dest='remote_folder',help="Define scp remote folder",type=str,default=None)
-parser.add_argument('--cron',action='store_true',dest='cron',help="Set command in crontab",default=False)
-parser.add_argument('--telegram',action='store_true',dest='telegram',help="Send telegram notification after backup",default=False)
+parser.add_argument(
+	'-d',
+	action='store',
+	dest='directory',
+	help="Set a backup directory",
+	type=str,
+	default=None,
+	required=True
+)
+
+parser.add_argument(
+	'-n',
+	action='store',
+	dest='app_name',
+	help="Define application name",
+	type=str,
+	default=None
+)
+
+parser.add_argument(
+	'-cF',
+	action='store',
+	dest='config_file',
+	help="Define configuration file",
+	type=str,
+	default=None,
+	required=True
+)
+
+parser.add_argument(
+	'-uD',
+	action='store',
+	dest='upload_driver',
+	help="Define upload driver dropbox|scp",
+	type=str,
+	default=None
+)
+
+parser.add_argument(
+	'-rF',
+	action='store',
+	dest='remote_folder',
+	help="Define scp remote folder",
+	type=str,
+	default=None
+)
+
+parser.add_argument(
+	'--cron',
+	action='store_true',
+	dest='cron',
+	help="Set command in crontab",
+	default=False
+)
+
+parser.add_argument(
+	'--telegram',
+	action='store_true',
+	dest='telegram',
+	help="Send telegram notification after backup",
+	default=False
+)
 
 args = parser.parse_args()
 
